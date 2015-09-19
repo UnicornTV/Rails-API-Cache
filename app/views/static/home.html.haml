@@ -1,0 +1,57 @@
+- if current_user && current_user.has_role?(:admin)
+  .left.column
+    %h1 Admin Panel
+
+    %p
+      Not much to see here. Check out
+      %a{ href: users_path } Users
+      ,
+      %a{ href: posts_path} Posts
+      and
+      %a{ href: tweets_path } Tweets
+      for something more useful.
+
+  .right.column
+    %form#settings
+      .input.select
+        %label
+          Application State
+        %select{ name: 'app_state' }
+          %option{ selected: "selected", value: Settings.app_state }= Settings::APP_STATE[Settings.app_state]
+          - Settings::APP_STATE.each_with_index do |setting, index|
+            - if index != Settings.app_state
+              %option{ value: index }= setting
+
+      .input
+        %input{ type: 'submit', value: 'Save' }
+
+    :coffee
+      $('form#settings').on 'submit', (e) ->
+        e.preventDefault()
+        if confirm('Are you sure you want to update these settings? This will effect the API and front-end application.')
+          $.post '/settings', $(this).serialize(), (response) ->
+            console.log(response)
+        else
+          console.log('nope')
+
+- else
+  .left.column
+    %h1 Welcome
+
+    %p
+      This is a small Rails CMS and API cache demo. Feel free to take a look around by
+      %a{ href: user_session_path } logging in
+      and creating some content. Be sure to check out the
+      %a{ href: 'https://ruby.unicorn.tv/' } tutorials on Unicorn.TV
+
+    %table
+      %thead
+        %tr
+          %th Username
+          %th Password
+      %tbody
+        %tr
+          %td
+            demo@unicorn.teevee
+          %td
+            demo1234

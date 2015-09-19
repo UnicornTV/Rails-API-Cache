@@ -1,0 +1,28 @@
+development:
+  clients:
+    default:
+      uri: <%= ENV['MONGO_URL'] %>
+      max_retries_on_connection_failure: 20
+      persist_in_safe_mode: true
+      skip_version_check: true
+      
+test:
+  clients:
+    default:
+      database: manticore_test
+      hosts:
+        - localhost:27017
+      options:
+        read: primary
+        # In the test environment we lower the retries and retry interval to
+        # low amounts for fast failures.
+        max_retries: 1
+        retry_interval: 0
+
+production:
+  clients:
+    default:
+      uri: <%= ENV['MONGO_URL'] %>
+      max_retries_on_connection_failure: 20
+      persist_in_safe_mode: true
+      skip_version_check: true

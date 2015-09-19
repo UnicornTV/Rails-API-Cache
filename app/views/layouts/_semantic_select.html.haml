@@ -1,0 +1,14 @@
+.ui.selection.dropdown
+  - if resource
+    = resource.hidden_field name
+  - else
+    %input{ name: name, type: "hidden"}/
+  .default.text= options[:default]
+  %i.dropdown.icon
+  .menu
+    - if choices.is_a? Hash
+      - choices.each do |key, val|
+        .item{ data: { value: key } }= val
+    - else
+      - choices.each do |option|
+        .item{ data: { value: option } }= option

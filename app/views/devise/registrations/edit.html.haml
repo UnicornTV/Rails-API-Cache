@@ -1,0 +1,21 @@
+.left.column
+  = render 'devise/registrations/form'
+
+.right.column
+  %h2 Quick Links
+
+  %ul
+    - if devise_mapping.confirmable? && controller_name != 'confirmations'
+      %li
+        = link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name), class: 'item'
+    - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
+      %li
+        = link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name), class: 'item'
+    - if devise_mapping.omniauthable?
+      - resource_class.omniauth_providers.each do |provider|
+        %li
+          = link_to "Connect your #{provider.to_s.titleize} account", omniauth_authorize_path(resource_name, provider), class: 'item'
+
+  %h2 Cancel my account
+  %p
+    Unhappy? #{link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete}.

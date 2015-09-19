@@ -1,0 +1,39 @@
+en:
+  navigation:
+    home: Home
+    logout: Logout
+    login: Login
+
+  account:
+    create: Sign Up
+    edit: Edit Account
+
+  admin:
+    users: Users
+    posts: Posts
+    tweets: Tweets
+    settings: Settings
+
+  auth:
+    login_with_email: Login with Email
+    register_with_email: Register with Email
+    with_github: Login with Github
+    with_facebook: Login with Facebook
+    with_twitter: Login with Twitter
+
+  registration:
+    incomplete: Please finish your account registration before continuing
+
+  error:
+    general: We're sorry, something went wrong, please try again.
+    unauthorized: Not authorized.
+
+  user:
+    created: User was successfully updated.
+    updated: User was successfully updated.
+
+  resource:
+    created: Successfully created.
+    updated: Successfully updated.
+    destroyed: Successfully deleted.
+    deleted: Successfully deleted.

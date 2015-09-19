@@ -1,0 +1,76 @@
+= simple_form_for(@resource, html: { multipart: true }) do |f|
+
+  .left.column
+    = f.input :published_date, as: :datetime
+    = f.input :published, as: :boolean, wrapper_html: { class: 'square solid' }
+
+    .three.fields
+      = f.input :url, label: "<a href='#{@resource.url}' target='_blank'>Tweet Permalink</a>".html_safe
+      = f.input :identifier, label: 'Tweet ID'
+
+      .input
+        %a.button.fetch{ href: '#', style: 'margin-top: 5.5rem;' } Fetch Twitter Data
+
+    .three.fields
+      = f.input :profile, label: "<a href='#{@resource.profile}' target='_blank'>Avatar URL</a>".html_safe
+      = f.input :author
+      = f.input :handle
+
+    = f.input :type, as: :hidden, input_html: { value: 'twitter' }
+
+    = f.input :share_text, label_html: { 'data-text' => 'Share text'}
+    = f.input :description, label_html: { 'data-text' => 'Description'}
+
+    = f.button :submit, 'Save Post'
+
+  .right.column
+    .input.image
+      - if @resource.photo.present?
+        %label
+          Image
+        %img{ src: @resource.photo, width: '100%' }
+      - else
+        %label No Image Uploaded
+
+    = f.input :photo, label: "<a href='#{@resource.photo}' target='_blank'>Photo URL</a>".html_safe
+    = f.input :media, as: :file, label: false
+
+:coffee
+  $('#tweet_description, #tweet_share_text').on 'keyup change', ->
+    $label = $(this).prev()
+    len = $(this).val().length
+    $label.text($label.data('text') + ' (' + len + ')')
+
+    if len > 120 && len <= 140
+      $label.css
+        color: '#ebb100'
+    else if len > 140
+      $label.css
+        color: '#B35050'
+    else
+      $label.css
+        color: '#7C705F'
+
+  $('a.fetch').on 'click', (e) ->
+    console.log('FETCHING...')
+    e.preventDefault()
+
+    url = $('input#tweet_url').val()
+    id = url.substr(url.lastIndexOf('/') + 1)
+
+    $('input#tweet_identifier').val(id)
+
+    $.ajax
+      url: '/tweets/data.json',
+      data: { identifier: id }
+      success: (response) ->
+        console.log 'SUCCESS'
+        console.log response
+        $('#tweet_description').val(response.text)
+        $('#tweet_published_date').val(response.created_at)
+        $('#tweet_handle').val(response.user.screen_name)
+        $('#tweet_author').val(response.user.name)
+        $('#tweet_profile').val(response.user.profile_image_url_https)
+        $('#tweet_photo').val(response.entities.media[0].media_url_https)
+      error: (response) ->
+        console.log 'ERROR'

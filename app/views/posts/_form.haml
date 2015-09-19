@@ -1,0 +1,50 @@
+= simple_form_for(@resource, html: { multipart: true }) do |f|
+
+  .left.column
+    = f.input :published_date, as: :datetime
+    = f.input :published, as: :boolean, wrapper_html: { class: 'square solid' }
+    = f.input :type, as: :select, collection: [:foo, :bar], input_html: { class: 'chosen' }
+
+    = f.input :share_text, label_html: { 'data-text' => 'Share text'}
+    = f.input :description, label_html: { 'data-text' => 'Description'}
+
+    = f.button :submit, 'Save Post'
+
+  .right.column
+
+    .input.image
+      - if @resource.photo.present?
+        %label
+          Image
+        %img{ src: @resource.photo, width: '100%' }
+      - else
+        %label No Image Uploaded
+
+    = f.input :photo, label: "<a href='#{@resource.photo}' target='_blank'>Photo URL</a>".html_safe
+    = f.input :media, as: :file, label: false
+
+
+
+:coffee
+  $('#post_description, #post_share_text').on 'keyup change', ->
+    $label = $(this).prev()
+    len = $(this).val().length
+    $label.text($label.data('text') + ' (' + len + ')')
+
+    if len > 120 && len <= 140
+      $label.css
+        color: '#ebb100'
+    else if len > 140
+      $label.css
+        color: '#B35050'
+    else
+      $label.css
+        color: '#7C705F'
+
+  $('#post_type').on 'change', ->
+    if $(this).val() == 'foo'
+      author = 'Foo'
+    else
+      author = 'Bar'
+
+    $('#post_author').val(author)

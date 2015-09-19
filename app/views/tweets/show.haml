@@ -1,0 +1,70 @@
+%header.section.head
+  %h1.left
+    Tweet:
+    = @resource.id
+
+  .actions.right
+    %a.yellow.button{ href: edit_tweet_path(@resource) } Edit Tweet
+
+.left.column
+  .preview
+    - if @resource.photo.present?
+      .media
+        %img{ src: @resource.photo, width: '100%' }
+
+      .info
+        %img{ src: @resource.profile }
+        %ul
+          %li= @resource.author
+          %li
+            %a{ href: @resource.url, target: '_blank' }
+              @#{@resource.handle}
+          %li= @resource.published_date.strftime('%l:%M%P')
+
+        %p
+          = @resource.description
+
+    - else
+      .author
+        %img{ src: @resource.profile }
+        %ul
+          %li= @resource.author
+          %li
+            %a{ href: @resource.url, target: '_blank' }
+              @#{@resource.handle}
+          %li= @resource.published_date.strftime('%l:%M%P')
+
+      .info
+        %p
+          = @resource.description
+
+
+.right.column
+  %table
+    %tbody
+      %tr
+        %th Live?
+        %td= @resource.published
+      %tr
+        %th Time
+        %td= @resource.published_date.strftime('%B %d, %Y at %l:%M%P')
+      %tr
+        %th Author
+        %td= @resource.author
+      %tr
+        %th Handle
+        %td
+          %a{ href: "https://twitter.com/#{@resource.handle}" }= "@#{@resource.handle}"
+      %tr
+        %th Share
+        %td= @resource.share_text
+      %tr
+        %th Text
+        %td= @resource.description
+      %tr
+        %th Tweet
+        %td
+          %a{ href: @resource.url } permalink
+          %br/
+          ID:
+          = @resource.identifier

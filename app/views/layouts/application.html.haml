@@ -1,0 +1,27 @@
+!!!
+%html
+  %head
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+    %title= content_for?(:title) ? yield(:title) : "App"
+    %meta{content: content_for?(:description) ? yield(:description) : "App", name: "description"}/
+
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+    %link{ rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' }
+
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+
+    = csrf_meta_tags
+
+    = yield(:head)
+
+  %body{class: "#{controller_name} #{action_name}"}
+    = render 'layouts/messages'
+
+    %header.global
+      = render 'layouts/navigation'
+
+    %main.global{ class: content_for?(:main_class) ? yield(:main_class) : '' }
+      = yield
+
+    %footer.global
+      = render 'layouts/footer'

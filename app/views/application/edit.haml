@@ -1,0 +1,9 @@
+%header.section.head
+  %h1.left
+    Edit #{@model_name}
+
+  .actions.right
+    %a.button.green{ href: '#', :'onClick' => "$(this).closest('header').next('form').submit(); return false;" } Save
+    %a.button.red{ href: polymorphic_path(@resource), data: { confirm: "Are you sure you want to delete?", method: :delete } } Delete
+
+= render 'form'

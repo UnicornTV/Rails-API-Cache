@@ -1,0 +1,15 @@
+%nav.global
+  .left.menu
+    = nav_link t('navigation.home'), root_path, icon: 'home'
+
+    - if user_signed_in? && current_user.has_role?(:admin)
+      = nav_link t('admin.users'), users_path
+      = nav_link t('admin.posts'), posts_path
+      = nav_link t('admin.tweets'), tweets_path
+
+  .right.menu
+    - if user_signed_in?
+      = nav_link t('navigation.logout'), destroy_user_session_path, method: 'delete', icon: 'sign out'
+
+    - else
+      = nav_link t('auth.login_with_email'), new_user_session_path, icon: 'user'

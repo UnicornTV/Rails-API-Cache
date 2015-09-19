@@ -1,0 +1,36 @@
+%section
+  %header.section.head
+    %h1.left
+      Manage Posts
+
+    .actions.right
+      %a.button{ href: new_post_path } New Post
+
+  %table{ cellpadding: 0, cellspacing: 0 }
+    %thead
+      %tr
+        %th Image
+        %th Author
+        %th Description
+        %th Time
+        %th Action
+    %tbody
+      - @resources.each do |r|
+        %tr{ class: r.published ? '' : 'red' }
+          %td{ width: '7%' }
+            - if r.photo.present?
+              %img{ src: r.photo, width: '100%' }
+            - else
+              N/A
+          %td
+            = r.type
+          %td{ width: '44%' }
+            = r.description
+          %td{ width: '10%' }
+            = r.published_date.strftime('%B %d')
+            %br/
+            = r.published_date.strftime('%l:%M%P')
+          %td
+            %a.green.button.small{ href: post_path(r) } preview
+            %a.yellow.button.small{ href: edit_post_path(r) } edit
+            %a.red.button.small{ href: post_path(r), data: { confirm: "Are you sure you want to delete?", method: :delete } } delete

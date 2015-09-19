@@ -1,0 +1,49 @@
+%header.section.head
+  %h1.left
+    Post:
+    = @resource.id
+
+  .actions.right
+    %a.yellow.button{ href: edit_post_path(@resource) } Edit Post
+
+.left.column
+  .preview{ class: @resource.type }
+    - if @resource.photo.present?
+      .media
+        %img{ src: @resource.photo, width: '100%' }
+
+      .info.large
+        %ul
+          %li= @resource.author
+          %li= @resource.published_date.strftime('%l:%M%P')
+
+        %p
+          = @resource.description
+
+    - else
+      %p
+        %strong
+          = @resource.author
+          = @resource.published_date.strftime('%l:%M%P')
+
+      %p
+        = @resource.description
+        
+.right.column
+  %table
+    %tbody
+      %tr
+        %th Live?
+        %td= @resource.published
+      %tr
+        %th Time
+        %td= @resource.published_date.strftime('%B %d, %Y at %l:%M%P')
+      %tr
+        %th Author
+        %td= @resource.author
+      %tr
+        %th Share
+        %td= @resource.share_text
+      %tr
+        %th Text
+        %td= @resource.description

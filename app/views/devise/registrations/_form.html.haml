@@ -1,0 +1,19 @@
+%h1= t('account.edit')
+
+= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+  = f.input :first_name, :autofocus => true, :required => true
+  = f.input :last_name, :required => true
+
+  - if current_user.unconfirmed_email?
+    %p
+      We've sent an email to #{current_user[:unconfirmed_email]} please check your inbox and spam folders and confirm your email address
+  - else
+    = f.input :email, :required => true
+
+  - if current_user.password_required?
+    = f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false
+    = f.input :password_confirmation, :required => false
+    = f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true
+
+  .field
+    = f.button :submit, 'Update'

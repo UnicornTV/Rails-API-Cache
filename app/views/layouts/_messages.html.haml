@@ -1,0 +1,14 @@
+- unless flash.empty?
+  %section.flash
+    .container
+      - flash.each do |status, message|
+        - if message.is_a?(String)
+          .text{ class: status, data: { status: status } }
+            = message
+
+      %i.close.fa.fa-times-circle
+
+:coffee
+  $('.flash').fadeIn()
+  $('.flash .close').on 'click', ->
+    console.log $(this).closest('.flash').fadeOut()
