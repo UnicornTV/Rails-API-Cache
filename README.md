@@ -20,8 +20,41 @@ You can find a demo app [on heroku](https://rails-api-cache.herokuapp.com).
 - Edit `config/config.yml` to customize your application settings, they will be available via `Manticore::Config` object within your app, e.g. `Manticore::Config.default_role`
 - Run with `rails s` and browse at `http://localhost:3000`
 
-## Simple Form
-By default, your form fields will be wrapped using simple form, however there are a few custom wrappers you can use as well:
+## Environment Variables
+
+The CMS leverages Twitter API and Amazon S3 for caching the API as well as image uploads. Make sure to set the following environment variables:
+
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- S3_BUCKET
+- S3_HOST_ALIAS
+- TWITTER_ACCESS_TOKEN
+- TWITTER_ACCESS_TOKEN_SECRET
+- TWITTER_CONSUMER_KEY
+- TWITTER_CONSUMER_SECRET
+- MONGO_URL
+- DEVISE_SECRET_KEY
+- SECRET_KEY_BASE
+
+### Amazon S3 Policy
+
+You will likely want to generate a user that has access to the S3 bucket. The most secure way to do this is to create an inline policy and explicitly allow permissions as needed:
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::YOUR_BUCKET_NAME",
+                "arn:aws:s3:::YOUR_BUCKET_NAME/*"
+            ]
+        }
+    ]
+}
+```
 
 ---
 ### Links
