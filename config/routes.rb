@@ -2,7 +2,7 @@ Manticore::Application.routes.draw do
 
   namespace :api, defaults: { format: :json }, path: '/api' do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
-      resources :tweets, defaults: { resource: 'Tweet' }
+      resources :videos, defaults: { resource: 'Video' }
     end
   end
 
@@ -30,6 +30,12 @@ Manticore::Application.routes.draw do
     collection {
       get :manage
       get :data
+    }
+  end
+
+  resources :videos, defaults: { resource: 'Video' } do
+    collection {
+      get :manage
     }
   end
 

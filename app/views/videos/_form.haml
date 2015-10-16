@@ -1,0 +1,11 @@
+= simple_form_for(@resource, html: { multipart: true }) do |f|
+
+  .left.column
+    = f.input :category, as: :select, collection: [:ruby, :swift, :go, :js], input_html: { class: 'chosen' }
+
+    = f.input :name
+    = f.input :description, label_html: { 'data-text' => 'Description'}
+    = f.input :mp4
+    = f.input :cover
+
+    = f.button :submit, 'Save Post'

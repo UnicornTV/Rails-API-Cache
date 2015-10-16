@@ -1,0 +1,17 @@
+%header.section.head
+  %h1.left
+    Video:
+    = @resource.id
+
+  .actions.right
+    %a.yellow.button{ href: edit_video_path(@resource) } Edit Video
+
+.left.column
+  %h2= @resource.name
+  %p= @resource.description
+
+  %img{ src: @resource.cover }
+
+  %ul
+    %li= @resource.category
+    %li= @resource.mp4

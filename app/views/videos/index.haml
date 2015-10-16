@@ -1,0 +1,34 @@
+%section
+  %header.section.head
+    %h1.left
+      Manage Videos
+
+    .actions.right
+      %a.button{ href: new_video_path } New Video
+
+  %table{ cellpadding: 0, cellspacing: 0 }
+    %thead
+      %tr
+        %th Cover
+        %th Name
+        %th Description
+        %th Category
+        %th MP4
+        %th
+    %tbody
+      - @resources.each do |r|
+        %tr
+          %td{ width: '7%' }
+            %img{ src: r.cover }
+          %td
+            = r.name
+          %td{ width: '44%' }
+            = r.description
+          %td
+            = r.category
+          %td
+            = r.mp4
+          %td
+            %a.green.button.small{ href: video_path(r) } preview
+            %a.yellow.button.small{ href: edit_video_path(r) } edit
+            %a.red.button.small{ href: video_path(r), data: { confirm: "Are you sure you want to delete?", method: :delete } } delete

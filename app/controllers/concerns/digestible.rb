@@ -19,7 +19,7 @@ module Digestible
     end
 
     def set_resources
-      @resources = @model.published.sorted
+      @resources = @model.all
     end
   end
 end
